@@ -1,0 +1,82 @@
+/* Общие стили для страницы */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    margin-top: 60px; /* Отступ для учета фиксированного хедера */
+}
+
+/* Контейнер для формы регистрации */
+.registration-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.registration-container h2 {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Стили для меток формы */
+.registration-container label {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 8px;
+    color: #555;
+}
+
+/* Стили для текстовых полей */
+.registration-container input[type="text"],
+.registration-container input[type="email"],
+.registration-container input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* Установка стилей для кнопки */
+.registration-container button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.registration-container button:hover {
+    background-color: #ff6347;
+}
+
+/* Стили для сообщений об ошибках и успешной регистрации */
+.flash {
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.flash.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.flash.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}

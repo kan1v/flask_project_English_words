@@ -1,0 +1,49 @@
+/* Стили для страницы тестов */
+.test-container {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.test h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.flag-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.flag {
+    width: 50px;
+    height: 30px;
+    margin: 0 15px;
+}
+
+.english-word {
+    font-size: 30px;
+    font-weight: bold;
+    margin: 0 10px;
+}
+
+input[type="text"] {
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    width: 300px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #333;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #ff6347;
+}

@@ -1,0 +1,37 @@
+/* Стили для главной страницы */
+.intro {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.intro h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.intro p {
+    font-size: 18px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+/* Стили для картинок на главной странице */
+.intro-image {
+    width: 100%;
+    max-width: 400px; /* Ограничим максимальную ширину для картинок */
+    height: auto;
+    margin: 10px;
+    border-radius: 8px; /* Добавим скругленные углы */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Контейнер для изображений */
+.image-container {
+    display: flex;
+    justify-content: center; /* Центрируем картинки по горизонтали */
+    gap: 20px; /* Расстояние между картинками */
+    flex-wrap: wrap; /* Чтобы изображения располагались друг под другом на маленьких экранах */
+    margin-top: 20px;
+}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тесты</title>
+    <link rel="stylesheet" href="static/css/tests.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Главная</a></li>
+                <li><a href="/login">Авторизация</a></li>
+                <li><a href="/tests">Тесты</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="test-container">
+            <div class="test">
+                <h2>Переведите слово</h2>
+                <div class="flag-container">
+                    <img src="static/images/british-flag.png" alt="English Flag" class="flag">
+                    <span class="english-word">{{ word['eng_word'] if word else '' }}</span>
+                </div>
+
+                <!-- Отображение flash-сообщений -->
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        <div>
+                            {% for category, message in messages %}
+                                <div class="flash {{ category }}">{{ message }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+
+                <form action="/tests" method="POST">
+                    <input type="hidden" name="correct_translation" value="{{ word['ru_word'] if word else '' }}">
+                    <label for="translation">Перевод на русский:</label>
+                    <input type="text" id="translation" name="translation" required>
+                    <button type="submit">Проверить</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2025 Все права защищены.</p>
+    </footer>
+</body>
+</html>
