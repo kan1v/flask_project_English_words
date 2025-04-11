@@ -34,3 +34,17 @@ button {
 button:hover {
     background-color: #ff6347;
 }
+
+.register-link {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.register-link a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+.register-link a:hover {
+    text-decoration: underline;
+}

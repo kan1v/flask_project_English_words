@@ -1,6 +1,6 @@
 # Импорты связанные с фреймворком Flask
-from flask import Flask, render_template, redirect, url_for, g, request, flash
-from flask_login import login_required, LoginManager
+from flask import Flask, render_template, redirect, url_for, g, request, flash, session
+from flask_login import login_required, LoginManager, current_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
 # Импорты связанные с os, sqlite3, time
@@ -21,6 +21,12 @@ app = Flask(__name__)
 app.config.from_object(__name__)
 
 app.config.update(dict(DATABASE=os.path.join(app.root_path, 'flsite.db')))
+
+#Login Manager
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login' 
+
 
 # Подключение к базе данных
 def connect_db():
@@ -45,6 +51,14 @@ def get_db():
 
 
 
+@login_manager.user_loader
+def load_user(user_id):
+    user = dbase.getUSer(user_id)
+    if user:
+        return UserLogin().create(user)
+    
+    return None
+
 # Роуты и тд
 # Главная страница 
 @app.route('/')
@@ -66,25 +80,72 @@ def close_db(error):
         g.link_db.close()
 
 
-# Обработчик для страницы на которой находятся
 @app.route('/tests', methods=['POST', 'GET'])
 def tests():
-    random_word = dbase.getRandomWord()
-    if request.method == 'POST':
-        user_translation = request.form['translation']
-        correct_translation = request.form['correct_translation']
-        if user_translation.strip().lower() == correct_translation.strip().lower():
-            flash('Перевод правильный !', 'success')
-        else:
-            flash(f"Неправильно. Правильный перевод: {correct_translation}", 'error')
+    # Инициализация счетчиков правильных и неправильных ответов
+    if 'correct_answers' not in session:
+        session['correct_answers'] = 0
+    if 'incorrect_answers' not in session:
+        session['incorrect_answers'] = 0
 
-        return render_template('tests.html', word=random_word)
-    
+    # Основная логика обработки POST запроса
+    if request.method == 'POST':
+        if 'translation' in request.form:  # Проверка перевода
+            user_translation = request.form['translation']
+            correct_translation = request.form['correct_translation']
+
+            if user_translation.strip().lower() == correct_translation.strip().lower():
+                flash('Перевод правильный!', 'success')
+                session['correct_answers'] += 1  # Увеличение счётчика правильных ответов
+            else:
+                flash(f"Неправильно. Правильный перевод: {correct_translation}", 'error')
+                session['incorrect_answers'] += 1  # Увеличение счётчика неправильных ответов
+
+            session.modified = True  # Фиксация изменений в сессии
+
+        elif 'eng_word' in request.form and 'ru_word' in request.form:  # Добавление новых слов
+            eng_word = request.form['eng_word']
+            ru_word = request.form['ru_word']
+
+            if not eng_word or not ru_word:
+                flash("Заполните поле!", "error")
+            elif dbase.addNewWords(eng_word, ru_word):
+                flash("Слова были добавлены в БД!", 'success')
+            else:
+                flash("Ошибка добавления слова в БД", "error")
+
+        return redirect(url_for('tests'))
+
+    # Получение случайного слова для теста
+    random_word = dbase.getRandomWord()
     return render_template('tests.html', word=random_word)
 
-@app.route('/login')
+@app.route('/reset_results', methods=['POST'])
+def reset_results():
+    # Сбрасываем результаты
+    session['correct_answers'] = 0
+    session['incorrect_answers'] = 0
+    session.modified = True  # Указываем, что сессия была изменена
+
+    flash('Результаты были сброшены!', 'success')
+    return redirect(url_for('tests'))
+
+
+# Обработчик для входа в свой профиль
+@app.route('/login', methods=['POST', 'GET'])
 def login():
+    if request.method == 'POST':
+       user = dbase.getUserByEmail(request.form['email'])
+       if user and check_password_hash(user['hashpsw'], request.form['password']):
+           userLogin = UserLogin().create(user)
+           return redirect(url_for('index'))
+       
+       flash('Неверный логин или пароль', 'error')
+
     return render_template('login.html')
+
+
+
 
 # Обработчик для регистрации 
 @app.route('/registration', methods=['POST', 'GET'])
@@ -125,6 +186,9 @@ def registration():
             return redirect(url_for('login'))  # Редирект на страницу логина
 
     return render_template('registration.html')
+
+
+
 
 
 

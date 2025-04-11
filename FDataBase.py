@@ -66,5 +66,28 @@ class FDataBase:
             print(f'Ошибка добавления пользоваетля в БД: {e}')     
             return False
 
-        return True          
+        return True
 
+    def getUserByEmail(self, email):
+        try:
+            self.__cur.execute(f"SELECT * FROM users WHERE email = ? LIMIT 1", (email,))
+            res = self.__cur.fetchone()
+            if not res:
+                print("Пользователь не найден")
+                return False
+            
+            return res
+        except sqlite3.Error as e:
+            print(f'Ошибка получения данных из БД: {e}')
+
+        return False
+
+    def addNewWords(self, eng_word, ru_word):
+        try:
+            self.__cur.execute(f"INSERT INTO words VALUES(NULL, ?, ?)", (eng_word, ru_word)) 
+            self.__db.commit()
+        except sqlite3.Error as e:
+            print(f"Ошибка добавления слов в БД: {e}")
+            return False
+
+        return True       

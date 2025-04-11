@@ -47,3 +47,93 @@ button {
 button:hover {
     background-color: #ff6347;
 }
+
+.add-word-container {
+    margin: 30px auto;
+    padding: 20px;
+    max-width: 600px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.add-word-container h2 {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.add-word-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.add-word-container label {
+    font-weight: bold;
+    color: #555;
+}
+
+.add-word-container input[type="text"] {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s;
+}
+
+.add-word-container input[type="text"]:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+.add-word-container button {
+    padding: 10px 15px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.add-word-container button:hover {
+    background-color: #0056b3;
+}
+
+.add-word-container button:active {
+    background-color: #004080;
+}
+
+.results-container {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.results-container h3 {
+    font-size: 1.5em;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.results-container p {
+    font-size: 1.2em;
+    color: #555;
+    margin: 5px 0;
+}
+
+.results-container p span {
+    font-weight: bold;
+    color: #007BFF;
+}
+

@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Тесты</title>
     <link rel="stylesheet" href="static/css/tests.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
 </head>
+
 <body>
     <header>
         <nav>
@@ -30,13 +31,13 @@
 
                 <!-- Отображение flash-сообщений -->
                 {% with messages = get_flashed_messages(with_categories=true) %}
-                    {% if messages %}
-                        <div>
-                            {% for category, message in messages %}
-                                <div class="flash {{ category }}">{{ message }}</div>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
+                {% if messages %}
+                <div>
+                    {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+                {% endif %}
                 {% endwith %}
 
                 <form action="/tests" method="POST">
@@ -47,10 +48,37 @@
                 </form>
             </div>
         </div>
+
+        <!-- Результаты -->
+        <div class="results-container">
+            <h3>Результаты:</h3>
+            <p>Правильных ответов: {{ session['correct_answers'] }}</p>
+            <p>Неправильных ответов: {{ session['incorrect_answers'] }}</p>
+            <!-- Кнопка для сброса результатов -->
+            <form action="/reset_results" method="POST">
+                <button type="submit">Сбросить результаты</button>
+            </form>
+        </div>
+
+
+        <!-- Форма для добавления нового слова -->
+        <div class="add-word-container">
+            <h2>Добавить новое слово</h2>
+            <form action="/tests" method="POST">
+                <label for="eng_word">Слово на английском:</label>
+                <input type="text" id="eng_word" name="eng_word" required>
+
+                <label for="ru_word">Перевод на русском:</label>
+                <input type="text" id="ru_word" name="ru_word" required>
+
+                <button type="submit">Добавить слово</button>
+            </form>
+        </div>
     </main>
 
     <footer>
         <p>© 2025 Все права защищены.</p>
     </footer>
 </body>
+
 </html>
